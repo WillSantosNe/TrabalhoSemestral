@@ -12,13 +12,28 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
-import com.example.trabalhosemestral.entity.Funcionario
+import com.example.trabalhosemestral.data.dao.FuncionarioDao
+import com.example.trabalhosemestral.data.entity.Funcionario
 
 @Composable
-fun TelaLogin(navController: NavController) {
+fun TelaLogin(navController: NavController, dao: FuncionarioDao) {
     var usuario by remember { mutableStateOf("") }
     var senha by remember { mutableStateOf("") }
     val context = LocalContext.current
+    val funcionarios = remember { mutableStateListOf<Funcionario>() }
+
+    // Carregar funcionários do banco na primeira execução
+    LaunchedEffect(Unit) {
+        val funcionariosBanco = dao.listarFuncionarios()
+        if (funcionariosBanco.isEmpty()) {
+            // Inserir administrador inicial
+            val admin = Funcionario(usuario = "admin", senha = "admin123", tipo = "Administrador")
+            dao.inserirFuncionario(admin)
+            funcionarios.add(admin)
+        } else {
+            funcionarios.addAll(funcionariosBanco)
+        }
+    }
 
     Column(
         modifier = Modifier
@@ -43,7 +58,8 @@ fun TelaLogin(navController: NavController) {
         )
         Spacer(modifier = Modifier.height(16.dp))
         Button(onClick = {
-            val funcionario = autenticarUsuario(usuario, senha)
+            // Verificar credenciais no banco de dados
+            val funcionario = funcionarios.find { it.usuario == usuario && it.senha == senha }
             if (funcionario != null) {
                 when (funcionario.tipo) {
                     "Administrador" -> navController.navigate("admin")
@@ -59,12 +75,8 @@ fun TelaLogin(navController: NavController) {
     }
 }
 
-// Função para autenticar usuários
-fun autenticarUsuario(usuario: String, senha: String): Funcionario? {
-    return when (usuario) {
-        "admin" -> Funcionario(usuario = "admin", senha = "123", tipo = "Administrador")
-        "operador" -> Funcionario(usuario = "operador", senha = "123", tipo = "Operador")
-        "gerente" -> Funcionario(usuario = "gerente", senha = "123", tipo = "Gerente")
-        else -> null
-    }
+
+suspend fun autenticarUsuario(usuario: String, senha: String, funcionarios: List<Funcionario>): Funcionario? {
+    return funcionarios.find { it.usuario == usuario && it.senha == senha }
 }
+

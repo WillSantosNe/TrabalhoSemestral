@@ -1,4 +1,4 @@
-package com.example.trabalhosemestral.entity
+package com.example.trabalhosemestral.data.entity
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey

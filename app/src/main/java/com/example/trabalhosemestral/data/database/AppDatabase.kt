@@ -1,14 +1,15 @@
-package com.example.trabalhosemestral.database
+package com.example.trabalhosemestral.data.database
 
 import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
-import com.example.trabalhosemestral.dao.FuncionarioDao
-import com.example.trabalhosemestral.dao.MaterialDao
-import com.example.trabalhosemestral.entity.Funcionario
+import com.example.trabalhosemestral.data.dao.FuncionarioDao
+import com.example.trabalhosemestral.data.dao.MaterialDao
+import com.example.trabalhosemestral.data.entity.Funcionario
+import com.example.trabalhosemestral.data.entity.Material
 
-@Database(entities = [Funcionario::class], version = 1)
+@Database(entities = [Funcionario::class, Material::class], version = 2)
 abstract class AppDatabase : RoomDatabase() {
 
     abstract fun funcionarioDao(): FuncionarioDao
