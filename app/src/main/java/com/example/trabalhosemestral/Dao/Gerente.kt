@@ -1,9 +1,11 @@
+package com.example.trabalhosemestral.Dao
+
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.Query
 
 @Dao
-interface GerenteDao {
+interface Gerente{
     @Insert
     suspend fun Adicionar(material: Material)
 
