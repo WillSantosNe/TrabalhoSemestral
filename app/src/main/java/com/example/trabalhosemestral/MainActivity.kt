@@ -31,7 +31,10 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-
+import com.example.trabalhosemestral.telas.TelaAdmin
+import com.example.trabalhosemestral.telas.TelaGerente
+import com.example.trabalhosemestral.telas.TelaLogin
+import com.example.trabalhosemestral.telas.TelaOperador
 
 
 class MainActivity : ComponentActivity() {
@@ -51,16 +54,10 @@ fun AppNavigation() {
     val navController = rememberNavController()
 
     NavHost(navController = navController, startDestination = "login") {
-        composable("login") { Login(navController) }
-        composable("operador/{username}") { backStackEntry ->
-            Operador(navController, backStackEntry.arguments?.getString("username"))
-        }
-        composable("adminstrador/{username}") { backStackEntry ->
-            Administrador(navController, backStackEntry.arguments?.getString("username"))
-        }
-        composable("gerente/{username}") { backStackEntry ->
-            Gerente(navController, backStackEntry.arguments?.getString("username"))
-        }
+        composable("login") { TelaLogin(navController) }
+        composable("admin") { TelaAdmin(navController) }
+        composable("operador") { TelaOperador(navController) }
+        composable("gerente") { TelaGerente(navController) }
     }
 }
 
