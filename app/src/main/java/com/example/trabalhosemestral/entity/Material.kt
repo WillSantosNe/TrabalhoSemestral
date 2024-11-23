@@ -9,5 +9,4 @@ open class Material(
     val nome: String,
     val marca: String,
     val quantidade: Int,
-    
 )

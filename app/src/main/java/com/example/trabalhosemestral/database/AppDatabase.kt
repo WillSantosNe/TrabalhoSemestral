@@ -11,6 +11,7 @@ import com.example.trabalhosemestral.entity.Funcionario
 abstract class AppDatabase : RoomDatabase() {
 
     abstract fun funcionarioDao(): FuncionarioDao
+    abstract fun materialDao(): MaterialDao
 
     companion object {
         @Volatile
