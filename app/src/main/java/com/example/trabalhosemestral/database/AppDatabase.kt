@@ -5,6 +5,7 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import com.example.trabalhosemestral.dao.FuncionarioDao
+import com.example.trabalhosemestral.dao.MaterialDao
 import com.example.trabalhosemestral.entity.Funcionario
 
 @Database(entities = [Funcionario::class], version = 1)
